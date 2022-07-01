@@ -1,4 +1,4 @@
-import { IOptions } from '@airbrake/browser';
+import { IOptions } from "@airbrake/browser";
 import { Notifier } from "@airbrake/node";
 import build from "pino-abstract-transport";
 

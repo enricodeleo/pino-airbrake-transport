@@ -1,6 +1,6 @@
-import { BaseNotifier, INotice, IOptions } from '@airbrake/browser';
-import { nodeFilter } from './filters/node';
-import { Scope, ScopeManager } from './scope';
+import { BaseNotifier, INotice, IOptions } from "@airbrake/browser";
+import { nodeFilter } from "./filters/node";
+import { Scope, ScopeManager } from "./scope";
 
 export class Notifier extends BaseNotifier {
   _inFlight: number;
@@ -18,7 +18,7 @@ export class Notifier extends BaseNotifier {
 
     this._inFlight = 0;
 
-    process.on('beforeExit', async () => {
+    process.on("beforeExit", async () => {
       await this.flush();
     });
 
@@ -80,11 +80,13 @@ export class Notifier extends BaseNotifier {
   }
 
   async _instrument() {
-    const mods = ['pg', 'mysql', 'mysql2', 'redis', 'http', 'https'];
+    const mods = ["pg", "mysql", "mysql2", "redis", "http", "https"];
     for (const modName of mods) {
       try {
         const mod = await import(`${modName}.js`);
-        const airbrakeMod = await import(`@airbrake/node/dist/instrumentation/${modName}.js`);
+        const airbrakeMod = await import(
+          `@airbrake/node/dist/instrumentation/${modName}.js`
+        );
         airbrakeMod.patch(mod, this);
       } catch (_) {
         console.error(_);

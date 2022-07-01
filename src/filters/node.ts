@@ -1,7 +1,6 @@
-import * as os from 'os';
-import { INotice } from '@airbrake/browser';
-import { NOTIFIER_NAME, NOTIFIER_VERSION, NOTIFIER_URL } from '../version';
-
+import * as os from "os";
+import { INotice } from "@airbrake/browser";
+import { NOTIFIER_NAME, NOTIFIER_VERSION, NOTIFIER_URL } from "../version";
 
 export function nodeFilter(notice: INotice): INotice {
   if (notice.context.notifier) {
@@ -32,7 +31,7 @@ export function nodeFilter(notice: INotice): INotice {
     execPath: process.execPath,
     argv: process.argv,
   };
-  ['uptime', 'cpuUsage', 'memoryUsage'].map((name) => {
+  ["uptime", "cpuUsage", "memoryUsage"].map((name) => {
     if (process[name]) {
       notice.params.process[name] = process[name]();
     }
