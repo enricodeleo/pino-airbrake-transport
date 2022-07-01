@@ -4,15 +4,25 @@
 ![NPM](https://img.shields.io/npm/v/pino-airbrake-transport)
 ![GitHub Workflow Status](https://github.com/enricodeleo/pino-airbrake-transport/actions/workflows/pino-airbrake-transport.yml/badge.svg?branch=main)
 
-This module provides a 'transport' for pino that sends errors to [Airbrake](https://airbrake.io?ref=enricodeleo.com).
+This module provides a _transport_ for [Pino](https://getpino.io/?ref=enricodeleo.com) that sends errors to [Airbrake](https://airbrake.io?ref=enricodeleo.com).
+
+Thanks to this module you can automatically transmit logs, stacktrace and context from pino to Aibrake.io. The best part is that this happens in a worker thread so that the impact of logging is reduced to the minimum.
 
 ## Install
+
+### npm
 
 ```shell
 npm i pino-airbrake-transport
 ```
 
-## usage
+### yarn
+
+```shell
+yarn add pino-airbrake-transport
+```
+
+## Usage
 
 ```typescript
 import pino from "pino";
