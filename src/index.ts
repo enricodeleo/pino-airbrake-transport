@@ -1,10 +1,10 @@
-import { NodeOptions, SeverityLevel } from "@sentry/node";
-import * as Sentry from "@sentry/node";
+import { IOptions } from '@airbrake/browser';
+import { Notifier } from "@airbrake/node";
 import build from "pino-abstract-transport";
 
-export const pinoLevelToSentryLevel = (level: number): SeverityLevel => {
+export const pinoLevelToSentryLevel = (level: number) => {
   if (level == 60) {
-    return "fatal";
+    return "critical";
   }
   if (level >= 50) {
     return "error";
@@ -13,7 +13,7 @@ export const pinoLevelToSentryLevel = (level: number): SeverityLevel => {
     return "warning";
   }
   if (level >= 30) {
-    return "log";
+    return "notice";
   }
   if (level >= 20) {
     return "info";
@@ -21,40 +21,34 @@ export const pinoLevelToSentryLevel = (level: number): SeverityLevel => {
   return "debug";
 };
 
-interface PinoSentryOptions {
-  sentry?: NodeOptions;
+interface PinoAibrakeOptions {
+  aibrake?: IOptions;
   minLevel?: number;
 }
 
-class ExtendedError extends Error {
-  public constructor(message: string, stack: string) {
-    super(message);
-
-    this.name = "Error";
-    this.stack = stack || null;
-  }
-}
-
-export default async function (pinoSentryOptions: PinoSentryOptions) {
-  Sentry.init(pinoSentryOptions.sentry);
+export default async function (PinoAibrakeOptions: PinoAibrakeOptions) {
+  const airbrake = new Notifier(PinoAibrakeOptions.aibrake);
 
   return build(async function (source) {
     for await (const obj of source) {
-      const stack = obj?.err?.stack;
-      const errorMessage = obj?.err?.message;
+      // const stack = obj?.err?.stack;
+      // const errorMessage = obj?.err?.message;
       const level = obj.level;
-      const scope = new Sentry.Scope();
-      scope.setLevel(pinoLevelToSentryLevel(level));
-      if (level > pinoSentryOptions.minLevel) {
-        if (stack) {
-          Sentry.captureException(
-            new ExtendedError(errorMessage, stack),
-            scope
-          );
-        } else {
-          Sentry.captureMessage(obj?.msg, scope);
+
+      // Filter by severity (ignore errors below level x)
+      airbrake.addFilter((notice) => {
+        if (notice.context.severity < PinoAibrakeOptions.minLevel) {
+          return null;
         }
-      }
+        return notice;
+      });
+
+      airbrake.notify({
+        error: obj?.err,
+        context: {
+          severity: pinoLevelToSentryLevel(level),
+        },
+      });
     }
   });
 }

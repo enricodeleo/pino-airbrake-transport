@@ -1,14 +1,15 @@
-# Pino Sentry transport
+# Pino Aibrake transport
 
-![NPM](https://img.shields.io/npm/l/pino-sentry-transport)
-![NPM](https://img.shields.io/npm/v/pino-sentry-transport)
-![GitHub Workflow Status](https://github.com/tomer-yechiel/pino-sentry-transport/actions/workflows/pino-sentry-transport.yml/badge.svg?branch=main)
+![NPM](https://img.shields.io/npm/l/pino-aibrake-transport)
+![NPM](https://img.shields.io/npm/v/pino-aibrake-transport)
+![GitHub Workflow Status](https://github.com/enricodeleo/pino-airbrake-transport/actions/workflows/pino-aibrake-transport.yml/badge.svg?branch=main)
 
-This module provides a 'transport' for pino that sends errors to Sentry.
+This module provides a 'transport' for pino that sends errors to [Aibrake](https://airbrake.io?ref=enricodeleo.com).
+
 ## Install
 
 ```shell
-npm i pino-sentry-transport
+npm i pino-aibrake-transport
 ```
 
 ## usage
@@ -18,16 +19,23 @@ import pino from "pino";
 
 const logger = pino({
   transport: {
-    target: "pino-sentry-transport",
+    target: "pino-aibrake-transport",
     options: {
-      sentry: {
-        dsn: "https://<key>:<secret>@sentry.io/<project>",
-        // aditional options for sentry
+      aibrake: {
+        projectId: 1,
+        projectKey: "REPLACE_ME",
+        environment: "production",
+        // aditional options for aibrake
+        performanceStats: false,
       },
     },
-    level: "info", // which level to send to sentry
+    level: "info", // which level to send to aibrake
   },
 });
 ```
-if log contain error, it will send to sentry using captureException if not it will use captureMessage.
 
+if log contain error, it will send to aibrake using captureException if not it will use captureMessage.
+
+## Credits
+
+Originally forked from [tomer-yechie's Sentry implementation](https://github.com/tomer-yechiel/pino-sentry-transport)
