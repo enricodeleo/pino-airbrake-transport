@@ -42,12 +42,17 @@ export default async function (PinoAirbrakeOptions: PinoAirbrakeOptions) {
         return notice;
       });
 
-      airbrake.notify({
-        error: stack ? obj?.err : obj?.msg,
-        context: {
-          severity: pinoLevelToSentryLevel(level),
-        },
-      });
+      try {
+        await airbrake.notify({
+          error: stack ? obj?.err : obj?.msg,
+          context: {
+            severity: pinoLevelToSentryLevel(level),
+          },
+        });
+      } catch (error) {
+        const consoleProperty = console.error ? 'error' : 'log';
+        console[consoleProperty](error);
+      }
     }
   });
 }
