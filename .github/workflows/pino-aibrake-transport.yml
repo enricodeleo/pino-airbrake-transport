@@ -2,8 +2,8 @@ name: Typescript Library Starter
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches:
+      - main
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

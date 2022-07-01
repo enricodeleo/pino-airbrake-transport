@@ -14,7 +14,6 @@
       "prerelease": true
     }
   ],
-  "repositoryUrl": "https://github.com/gjuchault/typescript-library-starter.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
