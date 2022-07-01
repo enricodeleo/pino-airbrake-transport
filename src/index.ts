@@ -50,7 +50,7 @@ export default async function (PinoAirbrakeOptions: PinoAirbrakeOptions) {
           },
         });
       } catch (error) {
-        const consoleProperty = console.error ? 'error' : 'log';
+        const consoleProperty = console.error ? "error" : "log";
         console[consoleProperty](error);
       }
     }
