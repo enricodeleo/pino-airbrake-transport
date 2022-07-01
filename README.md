@@ -29,7 +29,7 @@ const logger = pino({
         performanceStats: false,
       },
     },
-    minLevel: "info", // minimum log level that should be sent to Aibrake
+    level: "info", // minimum log level that should be sent to Aibrake
   },
 });
 ```
