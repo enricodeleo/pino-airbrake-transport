@@ -32,7 +32,6 @@ export default async function (PinoAibrakeOptions: PinoAibrakeOptions) {
   return build(async function (source) {
     for await (const obj of source) {
       const stack = obj?.err?.stack;
-      const errorMessage = obj?.err?.message;
       const level = obj.level;
 
       // Filter by severity (ignore errors below level x)
@@ -44,7 +43,7 @@ export default async function (PinoAibrakeOptions: PinoAibrakeOptions) {
       });
 
       airbrake.notify({
-        error: stack ? obj?.err : errorMessage,
+        error: stack ? obj?.err : obj?.msg,
         context: {
           severity: pinoLevelToSentryLevel(level),
         },
