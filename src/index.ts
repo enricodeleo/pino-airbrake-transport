@@ -31,9 +31,8 @@ export default async function (PinoAibrakeOptions: PinoAibrakeOptions) {
 
   return build(async function (source) {
     for await (const obj of source) {
-      const error = obj?.err;
-      const stack = error?.stack;
-      const errorMessage = new Error(error?.message || error);
+      const stack = obj?.err?.stack;
+      const errorMessage = obj?.err?.message;
       const level = obj.level;
 
       // Filter by severity (ignore errors below level x)
