@@ -29,12 +29,10 @@ const logger = pino({
         performanceStats: false,
       },
     },
-    level: "info", // which level to send to aibrake
+    minLevel: "info", // minimum log level that should be sent to Aibrake
   },
 });
 ```
-
-if log contain error, it will send to aibrake using captureException if not it will use captureMessage.
 
 ## Credits
 
