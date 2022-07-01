@@ -1,15 +1,15 @@
-# Pino Aibrake transport
+# Pino Airbrake transport
 
-![NPM](https://img.shields.io/npm/l/pino-aibrake-transport)
-![NPM](https://img.shields.io/npm/v/pino-aibrake-transport)
-![GitHub Workflow Status](https://github.com/enricodeleo/pino-airbrake-transport/actions/workflows/pino-aibrake-transport.yml/badge.svg?branch=main)
+![NPM](https://img.shields.io/npm/l/pino-airbrake-transport)
+![NPM](https://img.shields.io/npm/v/pino-airbrake-transport)
+![GitHub Workflow Status](https://github.com/enricodeleo/pino-airbrake-transport/actions/workflows/pino-airbrake-transport.yml/badge.svg?branch=main)
 
-This module provides a 'transport' for pino that sends errors to [Aibrake](https://airbrake.io?ref=enricodeleo.com).
+This module provides a 'transport' for pino that sends errors to [Airbrake](https://airbrake.io?ref=enricodeleo.com).
 
 ## Install
 
 ```shell
-npm i pino-aibrake-transport
+npm i pino-airbrake-transport
 ```
 
 ## usage
@@ -19,17 +19,17 @@ import pino from "pino";
 
 const logger = pino({
   transport: {
-    target: "pino-aibrake-transport",
+    target: "pino-airbrake-transport",
     options: {
-      aibrake: {
+      airbrake: {
         projectId: 1,
         projectKey: "REPLACE_ME",
         environment: "production",
-        // aditional options for aibrake
+        // aditional options for airbrake
         performanceStats: false,
       },
     },
-    level: "info", // minimum log level that should be sent to Aibrake
+    level: "info", // minimum log level that should be sent to Airbrake
   },
 });
 ```

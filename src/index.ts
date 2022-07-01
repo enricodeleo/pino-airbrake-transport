@@ -21,13 +21,13 @@ export const pinoLevelToSentryLevel = (level: number) => {
   return "debug";
 };
 
-interface PinoAibrakeOptions {
-  aibrake?: IOptions;
+interface PinoAirbrakeOptions {
+  airbrake?: IOptions;
   minLevel?: number;
 }
 
-export default async function (PinoAibrakeOptions: PinoAibrakeOptions) {
-  const airbrake = new Notifier(PinoAibrakeOptions.aibrake);
+export default async function (PinoAirbrakeOptions: PinoAirbrakeOptions) {
+  const airbrake = new Notifier(PinoAirbrakeOptions.airbrake);
 
   return build(async function (source) {
     for await (const obj of source) {
@@ -36,7 +36,7 @@ export default async function (PinoAibrakeOptions: PinoAibrakeOptions) {
 
       // Filter by severity (ignore errors below level x)
       airbrake.addFilter((notice) => {
-        if (notice.context.severity < PinoAibrakeOptions.minLevel) {
+        if (notice.context.severity < PinoAirbrakeOptions.minLevel) {
           return null;
         }
         return notice;
