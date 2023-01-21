@@ -35,7 +35,7 @@ const logger = pino({
         projectId: 1,
         projectKey: "REPLACE_ME",
         environment: "production",
-        // aditional options for airbrake
+        // additional options for airbrake
         performanceStats: false,
       },
     },
